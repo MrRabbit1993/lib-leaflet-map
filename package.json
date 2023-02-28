@@ -1,6 +1,6 @@
 {
   "name": "lib-leaflet-map",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "A Library for leaflet map",
   "keywords": [],
   "main": "dist/lib-leaflet-map.umd.js",
