@@ -19,6 +19,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
+    "dev": "SET NODE_OPTIONS=--openssl-legacy-provider && node examples/server.js",
     "prebuild": "rimraf dist",
     "build": "tsc --module commonjs && rollup -c rollup.config.ts --configPlugin typescript",
     "start": "rollup --config rollup.config.ts --configPlugin typescript",
@@ -67,6 +68,8 @@
     "@rollup/plugin-typescript": "^9.0.1",
     "@types/jest": "^23.3.2",
     "@types/node": "14.6.2",
+    "css-loader": "^3.2.0",
+    "express": "^4.17.1",
     "jest": "^23.6.0",
     "jest-config": "^23.6.0",
     "rimraf": "^2.6.2",
@@ -74,7 +77,21 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.18.0",
     "semantic-release": "^15.9.16",
+    "style-loader": "^1.0.0",
     "ts-jest": "^23.10.2",
-    "typescript": "^4.8.4"
+    "ts-loader": "^6.0.4",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "tslint-config-standard": "^8.0.1",
+    "tslint-loader": "^3.5.4",
+    "typescript": "^4.8.4",
+    "webpack": "^4.38.0",
+    "webpack-dev-middleware": "^3.7.0",
+    "webpack-hot-middleware": "^2.25.0",
+    "url-loader": "^4.1.1"
+  },
+  "dependencies": {
+    "@types/leaflet": "^1.9.1",
+    "leaflet": "^1.9.3"
   }
 }

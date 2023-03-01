@@ -4,14 +4,14 @@ import typescript from '@rollup/plugin-typescript'
 import { terser } from 'rollup-plugin-terser';
 import json from '@rollup/plugin-json';
 
-
-const libraryName = 'lib-leaflet-map'
+import pkg from "./package.json"  assert { type: "json" };
+// const libraryName = 'lib-leaflet-map'
 
 export default {
   input: 'src/index.ts',
   output: [
-    { file: `dist/${libraryName}.umd.js`, name: "libLeafletMap", format: 'umd', sourcemap: false },
-    { file: `dist/${libraryName}.es5.js`, format: 'es', sourcemap: false },
+    { file: pkg.main, name: "libLeafletMap", format: 'umd', sourcemap: false },
+    { file: pkg.module, format: 'es', sourcemap: false },
   ],
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
   external: [],

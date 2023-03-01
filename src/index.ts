@@ -1,2 +1,5 @@
+import LMap from "./core/LMap"
 
-console.log("A Library for leaflet map")
+export * from './types'
+
+export default LMap
