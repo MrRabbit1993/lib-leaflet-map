@@ -12,7 +12,7 @@
   "author": "MrRabbit <1993iweb@gmail.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/MrRabbit1993/lib-leaflet-map.git"
   },
   "license": "MIT",
   "engines": {
