@@ -20,7 +20,6 @@ module.exports = {
         entries[dir] = ["webpack-hot-middleware/client", entry];
       }
     }
-    console.log("入口",entries);
 
     return entries;
   }, {}),

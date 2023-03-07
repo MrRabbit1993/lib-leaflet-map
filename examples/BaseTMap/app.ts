@@ -6,4 +6,5 @@ const mapContainer = document.querySelector("#map")
 
 const MapOptions: IMapOptions = { MapType: "TMap" as const, crs: CRS.EPSG4326, Token:"93724b915d1898d946ca7dc7b765dda5" }
 
-new LMap(mapContainer as HTMLDivElement, MapOptions)
+const mapInstance = new LMap(mapContainer as HTMLDivElement, MapOptions)
+console.log(mapInstance);

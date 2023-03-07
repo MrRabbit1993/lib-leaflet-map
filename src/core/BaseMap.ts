@@ -1,7 +1,6 @@
 import L, {  Map, LatLngExpression, FeatureGroup } from "leaflet"
 import { IFeatureLayer, IMapOptions } from "./../types"
 
-
 export default class BaseMap {
 
   readonly map: Map
@@ -35,8 +34,9 @@ export default class BaseMap {
   /**
    * @desc 加载天地图地图
    */
-  loadTMapTileLayers(Token:string) {
-    const vector_map_layer = L.tileLayer(
+  loadTMapTileLayers(Token: string) {
+    // 地图
+    const vectorMapLayer = L.tileLayer(
       `http://t2.tianditu.com/vec_c/wmts?layer=vec&style=default&tilematrixset=c&Service=WMTS&Request=GetTile&Version=1.0.0&Format=tiles&TileMatrix={z}&TileCol={x}&TileRow={y}&tk=${Token}`,
       {
         maxZoom: 17,
@@ -45,8 +45,8 @@ export default class BaseMap {
         minZoom: 3,
       }
     );
-    //添加注记
-    const vector_note_layer = L.tileLayer(
+    // 添加注记
+    const vectorNoteLayer = L.tileLayer(
       `http://t2.tianditu.com/cva_c/wmts?layer=cva&style=default&tilematrixset=c&Service=WMTS&Request=GetTile&Version=1.0.0&Format=tiles&TileMatrix={z}&TileCol={x}&TileRow={y}&tk=${Token}`,
       {
         maxZoom: 17,
@@ -56,8 +56,8 @@ export default class BaseMap {
         minZoom: 3,
       }
     )
-    vector_map_layer.addTo(this.map);
-    vector_note_layer.addTo(this.map);
+    vectorMapLayer.addTo(this.map);
+    vectorNoteLayer.addTo(this.map);
   }
 
   /**
@@ -87,19 +87,19 @@ export default class BaseMap {
   }
 
   /**
-  * @desc 设置中心点和缩放
-  * @param latLng 中心点坐标
-  * @param zoom 层级大小
-  */
+   * @desc 设置中心点和缩放
+   * @param latLng 中心点坐标
+   * @param zoom 层级大小
+   */
   setCenterZoom(latLng: LatLngExpression, zoom: number) {
     this.map.setView(latLng, zoom)
   }
 
   /**
-  * @desc 转换经纬度格式
-  * @param latLng 经纬度
-  * @return latLngLatLngExpression
-  */
+   * @desc 转换经纬度格式
+   * @param latLng 经纬度
+   * @return latLngLatLngExpression
+   */
   toLatLng<T extends LatLngExpression>(latLng: T) {
     if (Array.isArray(latLng)) {
       return L.latLng(latLng[1], latLng[0])
@@ -108,18 +108,18 @@ export default class BaseMap {
   }
 
   /**
-  * @desc 获取图层
-  * @param { string } type 图层类型
-  * @return { FeatureGroup } 返回指定类型图层的集合feature
-  */
+   * @desc 获取图层
+   * @param { string } type 图层类型
+   * @return { FeatureGroup } 返回指定类型图层的集合feature
+   */
   getFeature<T>(type: string): FeatureGroup<T> {
     return this.featureCollectors[type]
   }
 
   /**
-  * @desc 新增图层
-  * @param { string } type 图层类型
-  * @return { FeatureGroup } 返回指定类型图层的feature
+   * @desc 新增图层
+   * @param { string } type 图层类型
+   * @return { FeatureGroup } 返回指定类型图层的feature
    */
   addFeature<T>(type: string): FeatureGroup<T>{
     const feature = L.featureGroup()
@@ -130,10 +130,10 @@ export default class BaseMap {
 
 
   /**
- * @desc 清除feature图层
- * @param { string } type 图层类型
- * @return { FeatureGroup } 返回指定类型图层的feature
-  */
+   * @desc 清除feature图层
+   * @param { string } type 图层类型
+   * @return { FeatureGroup } 返回指定类型图层的feature
+   */
   removeFeature(type?: string) {
     if (type) {
       const currentFeature = this.featureCollectors[type]
