@@ -1,25 +1,69 @@
-import L, { MapOptions, Map, LatLngExpression, FeatureGroup } from "leaflet"
-import {  IFeatureLayer } from "./../types"
+import L, {  Map, LatLngExpression, FeatureGroup } from "leaflet"
+import { IFeatureLayer, IMapOptions } from "./../types"
 
 
 export default class BaseMap {
 
   readonly map: Map
 
-  featureCollectors: IFeatureLayer = {} // 图层layer收集器
+  private featureCollectors: IFeatureLayer = {} // 图层layer收集器
 
-  constructor(element: HTMLDivElement, options: MapOptions) {
+  constructor(element: HTMLDivElement, options: IMapOptions) {
 
     this.map = L.map(element, options )
+    const { MapType } = options
 
-    this.loadTileLayers()
-
+    if (MapType === "AMap") {
+      this.loadAMapTileLayers()
+    } else if (MapType === "TMap") {
+      this.loadTMapTileLayers(options.Token)
+    } else {
+      this.loadCustomMapTileLayers()
+    }
   }
 
   /**
-   * @desc 加载地图 默认加载高德地图，有需要可以重写
+   * @desc 加载高德地图
    */
-  loadTileLayers() {
+  loadAMapTileLayers() {
+    const layer = L.tileLayer("https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}", {
+      subdomains: "1234"
+    });
+    layer.addTo(this.map)
+  }
+
+  /**
+   * @desc 加载天地图地图
+   */
+  loadTMapTileLayers(Token:string) {
+    const vector_map_layer = L.tileLayer(
+      `http://t2.tianditu.com/vec_c/wmts?layer=vec&style=default&tilematrixset=c&Service=WMTS&Request=GetTile&Version=1.0.0&Format=tiles&TileMatrix={z}&TileCol={x}&TileRow={y}&tk=${Token}`,
+      {
+        maxZoom: 17,
+        tileSize: 256,
+        zoomOffset: 1,
+        minZoom: 3,
+      }
+    );
+    //添加注记
+    const vector_note_layer = L.tileLayer(
+      `http://t2.tianditu.com/cva_c/wmts?layer=cva&style=default&tilematrixset=c&Service=WMTS&Request=GetTile&Version=1.0.0&Format=tiles&TileMatrix={z}&TileCol={x}&TileRow={y}&tk=${Token}`,
+      {
+        maxZoom: 17,
+        tileSize: 256,
+        zoomOffset: 1,
+        zIndex: 5,
+        minZoom: 3,
+      }
+    )
+    vector_map_layer.addTo(this.map);
+    vector_note_layer.addTo(this.map);
+  }
+
+  /**
+   * @desc 加载自定义地图，默认加载高德地图，需要可以重写
+   */
+  loadCustomMapTileLayers() {
     const layer = L.tileLayer("https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}", {
       subdomains: "1234"
     });
